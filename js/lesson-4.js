@@ -88,19 +88,94 @@
 // Парні числа повинні мати зелений фон (додати клас even),
 // Непарні числа - жовтий фон (додати клас odd).
 
-const div = document.querySelector(".number-container");
-const randomNumber = () => Math.floor(Math.random() * 100) + 1;
-let arrayElements = [];
-for (let i = 0; i <= 100; i++) {
-  const elem = document.createElement("div");
-  elem.classList.add("number");
-  const number = randomNumber();
-  elem.textContent = number;
-  if (number % 2 === 0) {
-    elem.classList.add("even");
-  } else {
-    elem.classList.add("odd");
+// const div = document.querySelector(".number-container");
+// const randomNumber = () => Math.floor(Math.random() * 100) + 1;
+// let arrayElements = [];
+// for (let i = 0; i <= 100; i++) {
+//   const elem = document.createElement("div");
+//   elem.classList.add("number");
+//   const number = randomNumber();
+//   elem.textContent = number;
+//   if (number % 2 === 0) {
+//     elem.classList.add("even");
+//   } else {
+//     elem.classList.add("odd");
+//   }
+//   arrayElements.push(elem);
+// }
+// div.append(...arrayElements);
+
+// Form Events, Input, Focus, Blur and Submit.
+
+// Використовуй шаблон форми з файлу html.
+
+// 1 - При події `input`, якщо користувач ввів в поле більше
+// 6 символів то додати клас `success`. Якщо ж символів менше аніж 6,
+// то клас `error`
+
+const input = document.querySelector(".js-username-input");
+// input.addEventListener("input", handlerInput);
+
+// function handlerInput() {
+//   const value = input.value.length;
+//   input.classList.toggle("success", value >= 6);
+//   input.classList.toggle("error", value < 6);
+// }
+// 2 - При події `focus` зроби перевірку на пустоту поля інпута,
+// якщо ж поле пусте, то зроби `outline` => `'3px solid red'`,
+// якщо при фокусі поле непусте, то `outline` => `'3px solid green'`
+
+// input.addEventListener("focus", handlerEvent);
+// function handlerEvent() {
+//   const value = input.value.length;
+//   input.classList.toggle("success", value >= 6);
+//   input.classList.toggle("error", value < 6);
+// }
+// 3 - При події `blur` зроби перевірку на пустоту поля інпута,
+// якщо ж поле пусте, то зроби `outline` => `'3px solid red'`,
+// якщо при фокусі поле непусте, то `outline` => `'3px solid lime'`
+// input.addEventListener("blur", handlerEvent);
+// function handlerEvent() {
+//   const value = input.value.length;
+//   input.classList.toggle("success", value >= 6);
+//   input.classList.toggle("error", value < 6);
+// }
+
+// 4 - При події `submit`. Відміни поведінку браузера по змовчуванню.
+// Дістань данні з інпуту і чек боксу, зроби перевірку,
+// що інпут не порожній, також, що нажатий чек бокс у положення true,
+// якщо користувач все виконав вірно, збери данні (userName)
+// у обьект і виведи у консоль. У разі, якщо користувач не виконав
+// одну із умов, виведи повідомлення. Також при події інпут реалізуй додавання
+// ім`я користувача у span, замість слова "Anonymous".
+// Якщо користувач ввів ім`я, а потім видалив, зроби так,
+// щоб на місце повернулось дефолтне знаяення "Anonymous".
+// При відправці форми, очисти інпут, верни чек бокс у положення
+// false, верни дефолтне значення "Anonymous" у span.
+
+const form = document.querySelector("form");
+form.addEventListener("submit", handlerSubmit);
+function handlerSubmit(e) {
+  e.preventDefault();
+  const { accept, userName } = e.target.elements;
+  if (userName.value.trim() === "" || !accept.checked) {
+    alert("Введіть значення");
+    return;
   }
-  arrayElements.push(elem);
+  const data = {
+    name: userName.value,
+  };
+  console.log(data);
+  e.currentTarget.reset();
+  document.querySelector("span").textContent = "Anonymous";
 }
-div.append(...arrayElements);
+
+input.addEventListener("input", hendlerAnonimus);
+function hendlerAnonimus() {
+  const name = input.value.trim();
+  if (name !== "") {
+    document.querySelector("span").textContent = name;
+  } else {
+    document.querySelector("span").textContent = "Anonymous";
+  }
+}
